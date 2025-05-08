@@ -2,9 +2,15 @@
 
 Demo application showcasing features like metrics exposition, ... .
 
-## Build
+## Deploy
 
 ```
-docker build -t docker.io/victoriametrics/demo-app:1.0 .
-docker push docker.io/victoriametrics/demo-app:1.0
+TAG=1.0 make docker-build;
+TAG=1.0 make docker-push;
+```
+
+## Load image to kind cluster
+
+```
+make kind-load
 ```

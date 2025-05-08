@@ -2,7 +2,7 @@ FROM golang:1.24.2-alpine AS builder
 
 COPY . .
 
-RUN go build -o /app main.go
+RUN go build -o /app ./...
 
 FROM alpine:3.20
 
