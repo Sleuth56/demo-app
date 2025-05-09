@@ -6,12 +6,21 @@ import (
 	"log"
 	"net/http"
 	"sync"
+	"sync/atomic"
+
+	"github.com/VictoriaMetrics/metrics"
 )
+
+var demoAlertFire = atomic.Int64{}
 
 var alertingWebhooksMutex sync.Mutex
 var alertingWebhooks [][]byte
 
 func initAlerting() {
+	metrics.NewGauge(`demo_alert_firing`, func() float64 {
+		return float64(demoAlertFire.Load())
+	})
+
 	http.Handle("/alerting/webhook", http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
 
 		b, err := io.ReadAll(r.Body)
@@ -46,5 +55,13 @@ func initAlerting() {
 			}
 		}
 		alertingWebhooksMutex.Unlock()
+	}))
+
+	http.Handle("/alerting/fireDemoAlert", http.HandlerFunc(func(_ http.ResponseWriter, _ *http.Request) {
+		demoAlertFire.Store(1)
+	}))
+
+	http.Handle("/alerting/resolveDemoAlert", http.HandlerFunc(func(_ http.ResponseWriter, _ *http.Request) {
+		demoAlertFire.Store(0)
 	}))
 }
