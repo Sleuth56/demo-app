@@ -38,3 +38,12 @@ jobs:
       if: github.event_name != 'pull_request'
       run: |
         make docker-push
+        
+    - name: Build Docker image arch64
+      run: |
+        make docker-build-arm64
+
+    - name: Push Docker image arch64
+      if: github.event_name != 'pull_request'
+      run: |
+        make docker-push-arm64
