@@ -8,8 +8,14 @@ TAG ?= $(shell echo $$(git describe --long --all | tr '/' '-')$$( \
 		git diff-index -u HEAD -- ':!config' ':!docs' | openssl sha1 | cut -d' ' -f2 | cut -c 1-8)))
 
 .PHONY: docker-build
-docker-build:
+dockerx-build:
 	$(CONTAINER_TOOL) buildx build --platform=linux/amd64,linux/arm64 -t $(REGISTRY)/$(ORG)/$(REPO):$(TAG) .
+
+dockerx-push:
+    $(CONTAINER_TOOL) buildx build --push -t your-registry/your-image-name .
+
+docker-build:
+	$(CONTAINER_TOOL) build -t $(REGISTRY)/$(ORG)/$(REPO):$(TAG) .
 
 .PHONY: docker-push
 docker-push:
