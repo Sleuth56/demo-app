@@ -17,7 +17,7 @@ docker-push:
 
 .PHONY: docker-build-arm64
 docker-build-arm64:
-	$(CONTAINER_TOOL) buildx build --platform=linux/arm64 -t $(REGISTRY)/$(ORG)/$(REPO):$(TAG)-arm64 .
+	$(CONTAINER_TOOL) buildx build --platform=linux/arm64 --push -t $(REGISTRY)/$(ORG)/$(REPO):$(TAG)-arm64 .
 
 .PHONY: docker-push-arm64
 docker-push-arm64:
