@@ -9,10 +9,10 @@ TAG ?= $(shell echo $$(git describe --long --all | tr '/' '-')$$( \
 
 .PHONY: docker-build
 docker-build-arm64:
-	$(CONTAINER_TOOL) buildx build --platform=linux/arm64 -t $(REGISTRY)/$(ORG)/$(REPO):$(TAG) .
+	$(CONTAINER_TOOL) buildx build --platform=linux/arm64 -t $(REGISTRY)/$(ORG)/$(REPO):$(TAG)-arm64 .
 
 docker-push-arm64:
-    $(CONTAINER_TOOL) buildx build --push -t $(REGISTRY)/$(ORG)/$(REPO):$(TAG) .
+    $(CONTAINER_TOOL) buildx build --push -t $(REGISTRY)/$(ORG)/$(REPO):$(TAG)-arm64 .
 
 docker-build:
 	$(CONTAINER_TOOL) build -t $(REGISTRY)/$(ORG)/$(REPO):$(TAG) .
