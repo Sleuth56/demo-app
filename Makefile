@@ -12,7 +12,7 @@ dockerx-build:
 	$(CONTAINER_TOOL) buildx build --platform=linux/amd64,linux/arm64 -t $(REGISTRY)/$(ORG)/$(REPO):$(TAG) .
 
 dockerx-push:
-    $(CONTAINER_TOOL) buildx build --push -t your-registry/your-image-name .
+    $(CONTAINER_TOOL) buildx build --push -t $(REGISTRY)/$(ORG)/$(REPO):$(TAG) .
 
 docker-build:
 	$(CONTAINER_TOOL) build -t $(REGISTRY)/$(ORG)/$(REPO):$(TAG) .
