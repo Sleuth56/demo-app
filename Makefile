@@ -1,6 +1,6 @@
 CONTAINER_TOOL ?= docker
 REGISTRY ?= docker.io
-ORG ?= victoriametrics
+ORG ?= sleuth56
 REPO = demo-app
 KIND_CLUSTER_NAME ?= kind
 TAG ?= $(shell echo $$(git describe --long --all | tr '/' '-')$$( \
@@ -9,7 +9,7 @@ TAG ?= $(shell echo $$(git describe --long --all | tr '/' '-')$$( \
 
 .PHONY: docker-build
 docker-build:
-	$(CONTAINER_TOOL) build -t $(REGISTRY)/$(ORG)/$(REPO):$(TAG) .
+	$(CONTAINER_TOOL) buildx build --platforms=linux/amd64,linux/arm64 -t $(REGISTRY)/$(ORG)/$(REPO):$(TAG) .
 
 .PHONY: docker-push
 docker-push:
